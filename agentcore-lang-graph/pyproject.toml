@@ -1,0 +1,27 @@
+[project]
+name = "agentcore-lang-graph"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bedrock-agentcore>=0.1.3",
+    "bedrock-agentcore-starter-toolkit>=0.1.9",
+    "boto3>=1.40.25",
+    "langchain-tavily>=0.2.11",
+    "langchain[aws]>=0.3.27",
+    "langgraph>=0.6.7",
+]
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main", "memory", "memory_config", "memory_utils"]
+
+[dependency-groups]
+dev = [
+    "vulture>=2.14",
+    "ruff>=0.8.0",
+]

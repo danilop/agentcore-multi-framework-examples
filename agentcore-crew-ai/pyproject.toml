@@ -1,0 +1,32 @@
+[project]
+name = "agentcore_crew_ai"
+version = "0.1.0"
+description = "agentcore-crew-ai using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "bedrock-agentcore>=0.1.2",
+    "bedrock-agentcore-starter-toolkit>=0.1.8",
+    "boto3>=1.40.24",
+    "crewai[tools]>=0.177.0,<1.0.0",
+]
+
+[project.scripts]
+agentcore_crew_ai = "agentcore_crew_ai.main:run"
+run_crew = "agentcore_crew_ai.main:run"
+train = "agentcore_crew_ai.main:train"
+replay = "agentcore_crew_ai.main:replay"
+test = "agentcore_crew_ai.main:test"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+
+[dependency-groups]
+dev = [
+    "vulture>=2.14",
+    "ruff>=0.8.0",
+]

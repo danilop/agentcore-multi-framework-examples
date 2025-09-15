@@ -1,0 +1,37 @@
+[project]
+name = "agentcore-strands-agents"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bedrock-agentcore>=0.1.2",
+    "bedrock-agentcore-starter-toolkit>=0.1.8",
+    "strands-agents>=1.7.0",
+    "strands-agents-tools>=0.2.6",
+    "hatchling",
+]
+
+[project.scripts]
+start = "agentcore_strands_agents.agent:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agentcore_strands_agents"]
+
+[tool.uv]
+package = true
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-asyncio>=0.24.0",
+    "pytest-mock>=3.14.0",
+    "requests>=2.32.0",
+    "docker>=7.1.0",
+    "vulture>=2.14",
+    "ruff>=0.8.0",
+]

@@ -1,0 +1,27 @@
+[project]
+name = "agentcore-scripts"
+version = "0.1.0"
+description = "Utility scripts for AgentCore memory management"
+authors = [{ name = "AgentCore Team", email = "team@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "bedrock-agentcore>=0.1.3",
+    "boto3>=1.40.25",
+]
+
+[project.scripts]
+create-memory = "create_memory:main"
+add-sample-memory = "add_sample_memory:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[dependency-groups]
+dev = [
+    "vulture>=2.14",
+    "ruff>=0.8.0",
+]

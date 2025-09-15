@@ -1,0 +1,31 @@
+[project]
+name = "agentcore-llama-index"
+version = "0.1.0"
+description = "AgentCore integration with LlamaIndex agents and workflows"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bedrock-agentcore>=0.1.3",
+    "bedrock-agentcore-starter-toolkit>=0.1.9",
+    "llama-index>=0.11.0",
+    "llama-index-llms-bedrock-converse>=0.2.4",
+    "llama-index-embeddings-bedrock>=0.2.2",
+    "llama-index-tools-requests>=0.2.0",
+    "llama-index-tools-wikipedia>=0.2.0",
+]
+
+[project.scripts]
+start = "main:main"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main", "memory", "tools"]
+
+[dependency-groups]
+dev = [
+    "vulture>=2.14",
+    "ruff>=0.8.0",
+]
