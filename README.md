@@ -15,7 +15,7 @@ uv sync
 ## Repository Structure
 
 ```
-BlogSeries/
+agentcore-multi-framework-examples/
 ├── agentcore-strands-agents/        # Strands Agents implementation
 ├── agentcore-crew-ai/               # CrewAI implementation  
 ├── agentcore-pydantic-ai/           # Pydantic AI implementation
