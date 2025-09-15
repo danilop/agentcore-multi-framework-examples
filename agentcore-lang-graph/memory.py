@@ -504,8 +504,3 @@ class MemoryManager:
             "initialized_sessions": len(self._initialized_sessions)
         }
 
-
-# Backward compatibility aliases for different frameworks
-CrewMemoryManager = MemoryManager
-AgentMemoryManager = MemoryManager
-LlamaIndexMemoryManager = MemoryManager

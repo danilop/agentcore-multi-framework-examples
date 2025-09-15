@@ -37,20 +37,6 @@ memory_manager = CrewMemoryManager(
 )
 
 
-# Legacy function for backward compatibility (if needed by crew.py)
-def retrieve_memories(query: str) -> List[Dict[str, Any]]:
-    """Retrieve memories from the memory client using shared function.
-    Args:
-        query: The query to retrieve memories from the memory client.
-    Returns:
-        A list of memories retrieved from the memory client.
-    """
-    return retrieve_memories_for_actor(
-        memory_id=memory_manager.memory_config.memory_id,
-        actor_id=memory_manager.default_actor_id,
-        search_query=query,
-        memory_client=memory_manager.memory_client
-    )
 
 
 @app.entrypoint

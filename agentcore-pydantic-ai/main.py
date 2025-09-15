@@ -37,10 +37,6 @@ session_message_history = {}  # Dict[session_id, List[ModelMessage]]
 def invoke(payload: Dict[str, Any], context: Optional[RequestContext] = None) -> str:
     """Main entrypoint with refactored memory functionality using AgentMemoryManager."""
     
-    print("Payload:")
-    print(json.dumps(payload, indent=2, default=str))
-    print("Context:")
-    print(json.dumps(context, indent=2, default=str))
 
     prompt = payload.get('prompt')
     actor_id = payload.get("actor_id", DEFAULT_ACTOR_ID)

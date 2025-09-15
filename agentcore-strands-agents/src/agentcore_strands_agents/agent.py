@@ -7,7 +7,6 @@ from typing import List, Dict, Any, Optional
 from bedrock_agentcore import BedrockAgentCoreApp
 from bedrock_agentcore.runtime.context import RequestContext
 from bedrock_agentcore.memory import MemoryClient
-# from bedrock_agentcore.memory.constants import StrategyType, DEFAULT_NAMESPACES
 
 from strands import Agent, tool
 from strands_tools import calculator

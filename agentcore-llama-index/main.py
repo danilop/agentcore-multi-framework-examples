@@ -121,7 +121,6 @@ async def invoke(payload: Dict[str, Any], context: Optional[RequestContext] = No
     
     logger.info("LlamaIndex agent invocation started")
     
-    # Debug logging
     logger.debug(f"Payload: {json.dumps(payload, indent=2, default=str)}")
     logger.debug(f"Context: {json.dumps(context or {}, indent=2, default=str)}")
     
