@@ -25,12 +25,6 @@ Usage:
         session_id="session-456"
     )
     
-    # Store facts (LlamaIndex specific)
-    memory_manager.store_facts(
-        facts=["fact1", "fact2"],
-        actor_id="user-123",
-        session_id="session-456"
-    )
 """
 
 import json
@@ -160,7 +154,6 @@ class MemoryManager:
     1. Load previous conversation context during initialization
     2. Retrieve relevant memories before message processing  
     3. Store new messages after each response
-    4. Store semantic facts (LlamaIndex specific)
     """
     
     def __init__(
@@ -298,59 +291,6 @@ class MemoryManager:
                 
         except Exception as e:
             self.logger.error(f"Failed to store conversation in memory: {e}", exc_info=True)
-            return False
-
-    def store_facts(
-        self,
-        facts: List[str],
-        actor_id: Optional[str] = None,
-        session_id: Optional[str] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> bool:
-        """
-        Store semantic facts in memory (LlamaIndex specific functionality).
-        
-        Args:
-            facts: List of facts to store
-            actor_id: Actor identifier (uses default if None)
-            session_id: Session identifier (uses default if None)
-            metadata: Optional metadata for the facts
-            
-        Returns:
-            True if facts were stored successfully, False otherwise
-        """
-        if not facts:
-            return True
-        
-        actor_id = actor_id or self.default_actor_id
-        session_id = session_id or self.default_session_id
-        
-        self.logger.info(f"Storing {len(facts)} facts (actor: {actor_id}, session: {session_id})")
-        
-        try:
-            namespace = f"/actor/{actor_id}/"
-            
-            memories = []
-            for fact in facts:
-                memories.append({
-                    "content": fact,
-                    "metadata": {
-                        "type": "semantic_fact",
-                        **(metadata or {})
-                    }
-                })
-            
-            self.memory_client.store_memories(
-                memory_id=self.memory_config.memory_id,
-                namespace=namespace,
-                memories=memories
-            )
-            
-            self.logger.debug(f"Successfully stored {len(facts)} facts")
-            return True
-            
-        except Exception as e:
-            self.logger.error(f"Failed to store facts: {e}")
             return False
 
     def store_new_messages(
