@@ -2,6 +2,10 @@
 
 This repository contains sample implementations of AI agents using different frameworks, all integrated with Amazon Bedrock AgentCore for production deployment and centralized memory management.
 
+For mor einformaitons on these implementaitons, see this blog post series:
+
+[Building Production-Ready AI Agents: A Multi-Framework Journey with Amazon Bedrock AgentCore](https://dev.to/aws/building-production-ready-ai-agents-a-multi-framework-journey-with-amazon-bedrock-agentcore-p32)
+
 ## Installing Dependencies
 
 Each project uses [uv](https://github.com/astral-sh/uv), a fast Python package installer and resolver, for dependency management. If you don't have uv installed, follow the [installation instructions](https://github.com/astral-sh/uv#installation) on the project's GitHub repository.
