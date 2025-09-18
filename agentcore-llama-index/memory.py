@@ -293,50 +293,6 @@ class MemoryManager:
             self.logger.error(f"Failed to store conversation in memory: {e}", exc_info=True)
             return False
 
-    def store_new_messages(
-        self,
-        new_messages: List[Any],
-        actor_id: Optional[str] = None,
-        session_id: Optional[str] = None
-    ) -> bool:
-        """
-        Store new messages in memory after agent response (Pydantic AI specific).
-        
-        Args:
-            new_messages: List of new message objects to store
-            actor_id: Actor identifier (uses default if None)
-            session_id: Session identifier (uses default if None)
-            
-        Returns:
-            True if messages were stored successfully, False otherwise
-        """
-        if not new_messages:
-            return True
-        
-        actor_id = actor_id or self.default_actor_id
-        session_id = session_id or self.default_session_id
-        
-        self.logger.debug(f"Storing {len(new_messages)} new messages for {actor_id}:{session_id}")
-        
-        try:
-            messages_to_store = self._convert_messages_for_storage(new_messages)
-            
-            if messages_to_store:
-                self.memory_client.create_event(
-                    memory_id=self.memory_config.memory_id,
-                    actor_id=actor_id,
-                    session_id=session_id,
-                    messages=messages_to_store
-                )
-                self.logger.info(f"Successfully stored {len(messages_to_store)} messages in memory")
-                return True
-            else:
-                self.logger.warning("No messages were converted for storage")
-                return False
-                
-        except Exception as e:
-            self.logger.error(f"Failed to store messages in memory: {e}", exc_info=True)
-            return False
 
     def _load_conversation_context(self, actor_id: str, session_id: str) -> str:
         """Load previous conversation history from memory and return as context string."""
@@ -380,54 +336,6 @@ class MemoryManager:
         self.logger.debug(f"Loaded conversation context from {len(context_messages)} messages")
         return conversation_context
 
-    def _convert_messages_for_storage(self, messages: List[Any]) -> List[tuple]:
-        """Convert various message types to memory storage format."""
-        messages_to_store = []
-        
-        for msg in messages:
-            try:
-                # Handle Pydantic AI ModelMessage objects
-                if hasattr(msg, 'parts') and msg.parts:
-                    for part in msg.parts:
-                        if hasattr(part, 'content'):
-                            content = part.content
-                            
-                            if hasattr(msg, 'kind'):
-                                if msg.kind == 'request':
-                                    if hasattr(part, 'part_kind') and part.part_kind == 'user-prompt':
-                                        role = 'USER'
-                                    elif hasattr(part, 'part_kind') and part.part_kind == 'system-prompt':
-                                        role = 'SYSTEM'
-                                    else:
-                                        role = 'USER'
-                                elif msg.kind == 'response':
-                                    role = 'ASSISTANT'
-                                else:
-                                    role = 'ASSISTANT'
-                            else:
-                                role = 'ASSISTANT' if 'Response' in type(msg).__name__ else 'USER'
-                            
-                            message_tuple = (
-                                json.dumps(content) if not isinstance(content, str) else content, 
-                                role
-                            )
-                            messages_to_store.append(message_tuple)
-                
-                # Handle simple string messages
-                elif isinstance(msg, str):
-                    messages_to_store.append((msg, 'USER'))
-                
-                # Handle dict messages
-                elif isinstance(msg, dict):
-                    content = msg.get('content', str(msg))
-                    role = msg.get('role', 'USER')
-                    messages_to_store.append((content, role))
-                            
-            except Exception as e:
-                self.logger.warning(f"Failed to convert message for storage: {e}")
-                continue
-        
-        return messages_to_store
 
     def get_memory_statistics(self) -> Dict[str, Any]:
         """
