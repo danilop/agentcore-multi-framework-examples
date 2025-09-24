@@ -168,3 +168,19 @@ The simplified configuration only stores the memory ID. All memories are organiz
 - **Educational Value**: Compare frameworks while maintaining consistency
 
 Each project demonstrates different agent framework capabilities while maintaining consistent memory management and deployment patterns.
+
+## Cleaning Up Resources
+
+To delete the resources created by `agentcore launch`, use the `agentcore` command in the Python virtual event:
+
+```bash
+agentcore destroy
+```
+
+This command deletes the AgentCore agent, the ECR images, the CodeBuild project, and the IAM roles used by the agent and by CodeBuild.
+
+To delete the memory, including all stored events, the strategies, and the memories extracted form the events, lookup the memory ID in the `../config/memory-config.json` file and use the AWS CLI:
+
+```bash
+aws bedrock-agentcore-control delete-memory --memory-id <MEMORY_ID>
+```
